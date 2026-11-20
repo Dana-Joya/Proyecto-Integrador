@@ -1,0 +1,1090 @@
+/* ==========================================================================
+   PATRIMONIA - SISTEMA DE ACCESIBILIDAD UNIVERSAL (WCAG 2.1 AA / AAA)
+   Estilos para Adaptaciones Visuales, Zoom Tipográfico y Modos de Contraste
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES DE ESCALA Y ZOOM TIPOGRÁFICO
+   -------------------------------------------------------------------------- */
+:root {
+  --font-scale: 1;
+  --line-height-scale: 1.5;
+  --letter-spacing-custom: normal;
+  --word-spacing-custom: normal;
+}
+
+/* Aplicación del Zoom Dinámico a toda la jerarquía tipográfica */
+html {
+  font-size: calc(16px * var(--font-scale, 1)) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. TIPOGRAFÍA Y LEGIBILIDAD AUMENTADA
+   -------------------------------------------------------------------------- */
+/* Fuente Amigable para Dislexia */
+html.dyslexic-font,
+html.dyslexic-font * {
+  font-family: 'Comic Sans MS', 'OpenDyslexic', 'Trebuchet MS', Verdana, sans-serif !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Espaciado de Texto Aumentado (WCAG 1.4.12) */
+html.text-spacing,
+html.text-spacing * {
+  line-height: 1.8 !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}
+
+html.text-spacing p,
+html.text-spacing li {
+  margin-bottom: 1.25em !important;
+}
+
+/* Resaltado de Enlaces e Interactivos */
+html.highlight-links a,
+html.highlight-links button,
+html.highlight-links [role="button"],
+html.highlight-links input,
+html.highlight-links select,
+html.highlight-links textarea {
+  text-decoration: underline 2px !important;
+  text-underline-offset: 4px !important;
+  outline: 2px solid #7e22ce !important;
+}
+
+/* Cursor Grande y Destacado */
+html.large-cursor,
+html.large-cursor * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 24 24' fill='%23000000' stroke='%23ffffff' stroke-width='2'><path d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'/></svg>"), auto !important;
+}
+
+/* Detener Animaciones / Reducción de Movimiento (WCAG 2.3.3) */
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. MODOS DE ALTO CONTRASTE Y VISIBILIDAD (WCAG AAA)
+   -------------------------------------------------------------------------- */
+
+/* Modo Alto Contraste Oscuro */
+html.high-contrast-dark {
+  --bg-app: #000000 !important;
+  --bg-surface: #0a0a0a !important;
+  --bg-surface-alt: #171717 !important;
+  --bg-surface-hover: #262626 !important;
+
+  --text-main: #ffffff !important;
+  --text-secondary: #facc15 !important; /* Amarillo de alto contraste */
+  --text-muted: #e5e5e5 !important;
+  --text-on-accent: #000000 !important;
+
+  --border-light: #525252 !important;
+  --border-neon-hover: #facc15 !important;
+
+  --neon-violet: #facc15 !important;
+  --neon-violet-dark: #fde047 !important;
+  --neon-blue: #38bdf8 !important;
+
+  --shadow-card: 0 0 0 2px #ffffff !important;
+  --shadow-neon-violet: 0 0 0 2px #facc15 !important;
+}
+
+html.high-contrast-dark body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.high-contrast-dark .sidebar,
+html.high-contrast-dark .app-header,
+html.high-contrast-dark .modal-content,
+html.high-contrast-dark .card,
+html.high-contrast-dark .stat-card,
+html.high-contrast-dark .museum-card,
+html.high-contrast-dark .artwork-card,
+html.high-contrast-dark .room-card,
+html.high-contrast-dark .artist-card,
+html.high-contrast-dark .tour-card,
+html.high-contrast-dark .accessibility-drawer,
+html.high-contrast-dark .global-search-dropdown,
+html.high-contrast-dark .toast {
+  background-color: #0a0a0a !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+html.high-contrast-dark .toast {
+  border-left: 6px solid #facc15 !important;
+}
+
+html.high-contrast-dark #dashboard::before,
+html.high-contrast-light #dashboard::before,
+html.high-contrast-dark .main-wrapper::before,
+html.high-contrast-light .main-wrapper::before {
+  display: none !important;
+}
+
+html.high-contrast-dark .search-item:hover,
+html.high-contrast-dark .search-item:focus {
+  background: #171717 !important;
+  border-color: #facc15 !important;
+}
+
+html.high-contrast-dark .btn-primary {
+  background: #facc15 !important;
+  color: #000000 !important;
+  border: 2px solid #ffffff !important;
+  font-weight: 800 !important;
+}
+
+html.high-contrast-dark .btn-secondary {
+  background: #171717 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+
+/* Modo Alto Contraste Claro */
+html.high-contrast-light {
+  --bg-app: #ffffff !important;
+  --bg-surface: #ffffff !important;
+  --bg-surface-alt: #f4f4f5 !important;
+  --bg-surface-hover: #e4e4e7 !important;
+
+  --text-main: #000000 !important;
+  --text-secondary: #18181b !important;
+  --text-muted: #27272a !important;
+  --text-on-accent: #ffffff !important;
+
+  --border-light: #000000 !important;
+  --border-neon-hover: #000000 !important;
+
+  --shadow-card: 0 0 0 2px #000000 !important;
+  --shadow-neon-violet: 0 0 0 2px #000000 !important;
+}
+
+html.high-contrast-light .sidebar,
+html.high-contrast-light .app-header,
+html.high-contrast-light .modal-content,
+html.high-contrast-light .card,
+html.high-contrast-light .stat-card,
+html.high-contrast-light .museum-card,
+html.high-contrast-light .artwork-card,
+html.high-contrast-light .room-card,
+html.high-contrast-light .artist-card,
+html.high-contrast-light .tour-card,
+html.high-contrast-light .accessibility-drawer,
+html.high-contrast-light .toast {
+  background-color: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+html.high-contrast-light .toast {
+  border-left: 6px solid #000000 !important;
+  color: #000000 !important;
+}
+
+/* Modo Monocromo / Escala de Grises */
+html.monochrome {
+  filter: grayscale(100%) !important;
+}
+
+/* Modo Invertir Colores */
+html.invert-colors {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+html.invert-colors img,
+html.invert-colors video {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+/* --------------------------------------------------------------------------
+   MODO OSCURO CONFORTABLE (dark-mode)
+   -------------------------------------------------------------------------- */
+html.dark-mode {
+  --bg-app: #1a1625 !important;
+  --bg-surface: #231d35 !important;
+  --bg-surface-alt: #2d2541 !important;
+  --bg-surface-hover: #362d4d !important;
+  --text-main: #f0ecff !important;
+  --text-secondary: #c4b8e8 !important;
+  --text-muted: #8b7faa !important;
+  --text-on-accent: #ffffff !important;
+  --border-light: #3d3358 !important;
+  --border-neon-hover: #9f7aea !important;
+  --neon-violet: #9f7aea !important;
+  --neon-violet-dark: #b794f4 !important;
+  --neon-violet-subtle: rgba(159,122,234,0.15) !important;
+  --morado-primary: #9f7aea !important;
+  --morado-dark: #b794f4 !important;
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark-mode body {
+  background-color: #1a1625 !important;
+  color: #f0ecff !important;
+}
+
+html.dark-mode .sidebar,
+html.dark-mode .app-header,
+html.dark-mode .modal-content,
+html.dark-mode .card-base,
+html.dark-mode .stat-card,
+html.dark-mode .museum-card,
+html.dark-mode .artwork-card,
+html.dark-mode .room-card,
+html.dark-mode .artist-card,
+html.dark-mode .tour-card,
+html.dark-mode .accessibility-drawer,
+html.dark-mode .global-search-dropdown,
+html.dark-mode .toast {
+  background-color: #231d35 !important;
+  border-color: #3d3358 !important;
+  color: #f0ecff !important;
+}
+
+html.dark-mode .form-input,
+html.dark-mode .form-select,
+html.dark-mode .form-textarea {
+  background-color: #2d2541 !important;
+  border-color: #3d3358 !important;
+  color: #f0ecff !important;
+}
+
+html.dark-mode .form-input::placeholder,
+html.dark-mode .form-textarea::placeholder {
+  color: #8b7faa !important;
+}
+
+html.dark-mode .btn-secondary {
+  background: #2d2541 !important;
+  color: #c4b8e8 !important;
+  border-color: #3d3358 !important;
+}
+
+html.dark-mode .nav-btn {
+  color: #c4b8e8 !important;
+}
+
+html.dark-mode .nav-btn.active {
+  background: #362d4d !important;
+  color: #b794f4 !important;
+  border-color: #9f7aea !important;
+}
+
+html.dark-mode .nav-btn:hover:not(.active) {
+  background: #2d2541 !important;
+}
+
+html.dark-mode .access-toggle-item {
+  background: #2d2541 !important;
+  border-color: #3d3358 !important;
+}
+
+html.dark-mode .access-toggle-label {
+  color: #f0ecff !important;
+}
+
+html.dark-mode .zoom-btn {
+  background: #2d2541 !important;
+  color: #c4b8e8 !important;
+  border-color: #3d3358 !important;
+}
+
+html.dark-mode .zoom-btn.active {
+  background: #9f7aea !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+
+html.dark-mode .contrast-card-btn {
+  background: #2d2541 !important;
+  border-color: #3d3358 !important;
+  color: #c4b8e8 !important;
+}
+
+html.dark-mode .contrast-card-name {
+  color: #f0ecff !important;
+}
+
+html.dark-mode .contrast-card-btn.active {
+  border-color: #9f7aea !important;
+  background: rgba(159, 122, 234, 0.2) !important;
+  box-shadow: 0 0 0 2px #9f7aea !important;
+}
+
+html.dark-mode .zoom-controls-grid {
+  background: #2d2541 !important;
+}
+
+html.dark-mode .accessibility-drawer-header,
+html.dark-mode .accessibility-drawer-footer,
+html.dark-mode .accessibility-drawer-body {
+  background-color: #231d35 !important;
+}
+
+html.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+html.dark-mode .section-header,
+html.dark-mode .content-section {
+  background-color: #1a1625 !important;
+}
+
+html.dark-mode .nav-badge {
+  background: #362d4d !important;
+  color: #b794f4 !important;
+}
+
+html.dark-mode .sidebar-brand {
+  border-bottom-color: #3d3358 !important;
+}
+
+html.dark-mode #readingGuideBar {
+  background: rgba(159, 122, 234, 0.2) !important;
+  border-top-color: #9f7aea !important;
+  border-bottom-color: #9f7aea !important;
+}
+
+html.dark-mode .switch-slider {
+  background-color: #3d3358 !important;
+}
+
+html.dark-mode input:checked + .switch-slider {
+  background-color: #9f7aea !important;
+}
+
+/* --------------------------------------------------------------------------
+   DALTONISMO (Simulación de Visión con SVG Filters)
+   -------------------------------------------------------------------------- */
+html.colorblind-protanopia {
+  filter: url('#protanopia-filter') !important;
+}
+
+html.colorblind-deuteranopia {
+  filter: url('#deuteranopia-filter') !important;
+}
+
+html.colorblind-tritanopia {
+  filter: url('#tritanopia-filter') !important;
+}
+
+/* --------------------------------------------------------------------------
+   MODO COGNITIVO — Simplifica la interfaz
+   -------------------------------------------------------------------------- */
+html.cognitive-mode .artwork-card .card-desc,
+html.cognitive-mode .museum-card .museum-desc,
+html.cognitive-mode .artist-card .artist-bio,
+html.cognitive-mode .tour-card .tour-desc,
+html.cognitive-mode .room-card .room-desc {
+  display: none !important;
+}
+
+html.cognitive-mode .section-header p {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   MODO ENFOQUE — Atenúa elementos no activos
+   -------------------------------------------------------------------------- */
+html.focus-mode .sidebar-nav .nav-btn:not(.active) {
+  opacity: 0.35 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+html.focus-mode .sidebar-nav .nav-btn:not(.active):hover {
+  opacity: 0.75 !important;
+}
+
+/* --------------------------------------------------------------------------
+   BOTONES GRANDES (Motor & Interacción)
+   -------------------------------------------------------------------------- */
+html.large-buttons .btn,
+html.large-buttons button:not(.accessibility-fab):not(.accessibility-close-btn):not(.zoom-btn):not(.contrast-card-btn):not(.switch-accessible):not(.nav-btn):not(.modal-close-btn) {
+  min-height: 52px !important;
+  font-size: 1.05rem !important;
+  padding: 14px 24px !important;
+}
+
+/* --------------------------------------------------------------------------
+   DISCAPACIDAD AUDITIVA — Señales visuales en toasts/alertas
+   -------------------------------------------------------------------------- */
+html.hearing-impairment .toast {
+  border: 3px solid #7c3aed !important;
+  animation: hearing-flash 0.6s ease 2 !important;
+}
+
+@keyframes hearing-flash {
+  0%, 100% { border-color: #7c3aed; box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+  50% { border-color: #fbbf24; box-shadow: 0 0 12px 4px rgba(251,191,36,0.4); }
+}
+
+/* --------------------------------------------------------------------------
+   GRID para los botones de Daltonismo (2 columnas)
+   -------------------------------------------------------------------------- */
+.colorblind-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   LISTA DE TOGGLES
+   -------------------------------------------------------------------------- */
+.access-toggles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* label con icono en los toggles */
+.access-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   4. GUÍA DE LECTURA VISUAL (Línea de seguimiento del ratón)
+   -------------------------------------------------------------------------- */
+#readingGuideBar {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  height: 38px;
+  background: rgba(124, 58, 237, 0.15);
+  border-top: 2px dashed #7c3aed;
+  border-bottom: 2px dashed #7c3aed;
+  pointer-events: none;
+  z-index: 999998;
+  display: none;
+  transition: top 0.05s ease-out;
+}
+
+html.high-contrast-dark #readingGuideBar {
+  background: rgba(250, 204, 21, 0.25);
+  border-top: 2px solid #facc15;
+  border-bottom: 2px solid #facc15;
+}
+
+/* --------------------------------------------------------------------------
+   5. BOTÓN FLOTANTE DE ACCESIBILIDAD (FAB)
+   -------------------------------------------------------------------------- */
+.accessibility-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--morado-primary, #7c3aed);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 99999;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+
+.accessibility-fab:hover {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.55);
+}
+
+.accessibility-fab:focus-visible {
+  outline: 3px solid #7e22ce;
+  outline-offset: 4px;
+}
+
+.accessibility-fab svg {
+  width: 28px;
+  height: 28px;
+  stroke: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   6. PANEL / DRAWER LATERAL DE ACCESIBILIDAD
+   -------------------------------------------------------------------------- */
+.accessibility-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 100000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.accessibility-drawer-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.accessibility-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: -6px 0 35px rgba(15, 23, 42, 0.18);
+  z-index: 100001;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.accessibility-drawer.active {
+  transform: translateX(0);
+}
+
+.accessibility-drawer-header {
+  padding: 20px 24px;
+  background: var(--bg-surface-alt);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accessibility-drawer-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.accessibility-drawer-title svg {
+  color: var(--neon-violet-dark);
+}
+
+.accessibility-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.accessibility-close-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+}
+
+.accessibility-drawer-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.access-section-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--neon-violet-dark);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Control de Zoom / Agrandamiento de Letra */
+.zoom-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: var(--bg-surface-alt);
+  padding: 6px;
+  border-radius: var(--radius-md);
+}
+
+.zoom-btn {
+  padding: 10px 4px;
+  border: 1px solid var(--border-light);
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.zoom-btn:hover {
+  border-color: var(--neon-violet);
+  background: var(--bg-surface-hover);
+}
+
+.zoom-btn.active {
+  background: var(--morado-primary, #7c3aed);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35);
+}
+
+.zoom-indicator-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 6px;
+}
+
+/* Selector de Modos de Contraste */
+.contrast-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.contrast-card-btn {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-light);
+  background: var(--bg-surface);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 0.2s;
+}
+
+.contrast-card-btn:hover {
+  border-color: var(--neon-violet);
+}
+
+.contrast-card-btn.active {
+  border-color: var(--neon-violet-dark);
+  background: var(--neon-violet-subtle);
+  box-shadow: 0 0 0 2px var(--neon-violet-dark);
+}
+
+.contrast-card-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contrast-card-name svg {
+  color: var(--morado-primary, #7c3aed);
+  flex-shrink: 0;
+}
+
+.contrast-card-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* Interruptores Toggles Accesibles */
+.access-toggle-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--bg-surface-alt);
+  border-radius: var(--radius-md);
+  gap: 12px;
+  border: 1px solid var(--border-light);
+}
+
+.access-toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.access-toggle-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.access-toggle-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Switch HTML accesible */
+.switch-accessible {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.switch-accessible input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  transition: 0.25s;
+  border-radius: 34px;
+}
+
+.switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.25s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.switch-accessible input:checked + .switch-slider {
+  background-color: var(--neon-violet-dark);
+}
+
+.switch-accessible input:focus-visible + .switch-slider {
+  outline: 3px solid var(--neon-blue);
+  outline-offset: 2px;
+}
+
+.switch-accessible input:checked + .switch-slider:before {
+  transform: translateX(22px);
+}
+
+/* Footer del Drawer */
+.accessibility-drawer-footer {
+  padding: 18px 24px;
+  background: var(--bg-surface-alt);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  gap: 10px;
+}
+
+.btn-reset-accessibility {
+  flex: 1;
+  padding: 10px 16px;
+  border: 1px solid var(--border-light);
+  background: #ffffff;
+  color: var(--text-main);
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-reset-accessibility:hover {
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+
+
+/* Herramientas funcionales del lector de voz */
+.accessibility-reader-tools {
+  margin: 12px 0 16px;
+  padding: 14px;
+  border: 1px solid var(--neon-violet, #8b5cf6);
+  border-radius: 12px;
+  background: rgba(124, 58, 237, 0.08);
+}
+.accessibility-reader-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.btn-reader-action, .btn-reader-link {
+  border: 1px solid #8b5cf6; border-radius: 8px; padding: 9px 12px;
+  background: #fff; color: #24123d; font: inherit; font-weight: 700; cursor:pointer;
+}
+.btn-reader-action:focus-visible, .btn-reader-link:focus-visible {
+  outline: 3px solid #facc15; outline-offset: 3px;
+}
+.btn-reader-action:disabled { opacity:.5; cursor:not-allowed; }
+.btn-reader-link { margin-top:8px; background:transparent; color:inherit; }
+.reader-status { margin:9px 0 0; font-size:.85rem; }
+html.hearing-impairment .toast {
+  border: 3px solid #facc15 !important;
+  box-shadow: 0 0 0 2px #111, 0 0 0 4px #facc15 !important;
+}
+html.hearing-impairment .toast::before {
+  content: "AVISO VISUAL";
+  display:block; font-size:.7rem; font-weight:900; letter-spacing:.08em;
+  color:#facc15; margin-right:8px;
+}
+
+/* --------------------------------------------------------------------------
+   CORRECCIÓN DE CONTRASTE: ACCESOS DIRECTOS DEL DASHBOARD
+   Los mosaicos conservan el fondo blanco también en modo oscuro; por eso
+   sus textos deben permanecer oscuros para evitar texto claro sobre blanco.
+   -------------------------------------------------------------------------- */
+.quick-action-tile,
+.quick-action-tile:visited {
+  color: #24123d !important;
+  background-color: #ffffff !important;
+}
+
+.quick-action-tile span {
+  color: #24123d !important;
+  -webkit-text-fill-color: #24123d !important;
+  opacity: 1 !important;
+}
+
+.quick-action-tile svg {
+  color: #7c3aed !important;
+  stroke: #7c3aed !important;
+}
+
+.quick-action-tile:hover,
+.quick-action-tile:focus-visible {
+  color: #24123d !important;
+  background-color: #ffffff !important;
+  border-color: #7c3aed !important;
+}
+
+
+/* ==========================================================================
+   AJUSTES GLOBALES DE CONTRASTE Y ESTADOS INTERACTIVOS
+   Corrección: encabezado, tarjetas, bitácora y accesos directos en todos
+   los modos visuales. Evita texto claro sobre fondos claros al hacer hover.
+   ========================================================================== */
+
+/* El encabezado debe seguir el tema activo y conservar texto legible. */
+html.dark-mode .header,
+html.high-contrast-dark .header {
+  background: #171323 !important;
+  color: var(--text-main) !important;
+  border-bottom-color: var(--border-light) !important;
+}
+html.dark-mode .breadcrumb-trail span,
+html.high-contrast-dark .breadcrumb-trail span {
+  color: var(--text-secondary) !important;
+}
+html.dark-mode .breadcrumb-active,
+html.high-contrast-dark .breadcrumb-active {
+  color: var(--text-main) !important;
+}
+html.dark-mode .header-search input,
+html.high-contrast-dark .header-search input {
+  background: #100d18 !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-light) !important;
+}
+html.dark-mode .header-action-btn,
+html.high-contrast-dark .header-action-btn {
+  background: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-light) !important;
+}
+
+/* Tarjetas y paneles. */
+html.dark-mode .card-base,
+html.dark-mode .panel-card,
+html.dark-mode .chart-card-container,
+html.high-contrast-dark .card-base,
+html.high-contrast-dark .panel-card,
+html.high-contrast-dark .chart-card-container {
+  background: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-light) !important;
+}
+html.high-contrast-dark .panel-header,
+html.high-contrast-dark .panel-header h3,
+html.high-contrast-dark .section-title-wrap h2,
+html.high-contrast-dark .section-title-wrap p {
+  color: #ffffff !important;
+}
+
+/* Bitácora: el hover ya no puede convertir la tarjeta en blanca. */
+html.dark-mode .activity-item,
+html.dark-mode .activity-item:hover,
+html.high-contrast-dark .activity-item,
+html.high-contrast-dark .activity-item:hover {
+  background: #2d2541 !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-light) !important;
+  box-shadow: none !important;
+}
+html.high-contrast-dark .activity-item,
+html.high-contrast-dark .activity-item:hover {
+  background: #171717 !important;
+  border: 1px solid #737373 !important;
+}
+html.dark-mode .activity-title,
+html.dark-mode .activity-desc,
+html.dark-mode .activity-time,
+html.high-contrast-dark .activity-title,
+html.high-contrast-dark .activity-desc,
+html.high-contrast-dark .activity-time {
+  color: var(--text-main) !important;
+}
+html.high-contrast-dark .activity-title,
+html.high-contrast-dark .activity-desc,
+html.high-contrast-dark .activity-time {
+  color: #ffffff !important;
+}
+html.dark-mode .activity-avatar,
+html.dark-mode .activity-avatar[style],
+html.high-contrast-dark .activity-avatar,
+html.high-contrast-dark .activity-avatar[style] {
+  background: #231d35 !important;
+  color: #ffffff !important;
+}
+
+/* Accesos directos y botones en temas oscuros. */
+html.dark-mode .quick-action-tile,
+html.dark-mode .quick-action-tile:hover,
+html.high-contrast-dark .quick-action-tile,
+html.high-contrast-dark .quick-action-tile:hover {
+  background: var(--bg-surface-alt) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-light) !important;
+}
+html.dark-mode .quick-action-tile span,
+html.dark-mode .quick-action-tile svg,
+html.high-contrast-dark .quick-action-tile span,
+html.high-contrast-dark .quick-action-tile svg {
+  color: var(--text-main) !important;
+  stroke: currentColor !important;
+}
+html.high-contrast-dark .quick-action-tile,
+html.high-contrast-dark .quick-action-tile:hover {
+  background: #171717 !important;
+  border: 2px solid #ffffff !important;
+}
+html.high-contrast-dark .quick-action-tile span,
+html.high-contrast-dark .quick-action-tile svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Botones secundarios y controles que antes conservaban fondo blanco. */
+html.dark-mode .btn-secondary,
+html.dark-mode .mobile-menu-btn,
+html.dark-mode .modal-close-btn {
+  background: var(--bg-surface-alt) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-light) !important;
+}
+html.high-contrast-dark .btn-secondary,
+html.high-contrast-dark .mobile-menu-btn,
+html.high-contrast-dark .modal-close-btn {
+  background: #171717 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+
+/* Formularios, listas desplegables y ventanas modales. */
+html.dark-mode .modal-content,
+html.dark-mode .form-input,
+html.dark-mode .form-textarea,
+html.dark-mode .form-select,
+html.dark-mode select,
+html.dark-mode input,
+html.dark-mode textarea {
+  background: #2d2541 !important;
+  color: #f0ecff !important;
+  border-color: #55476f !important;
+}
+html.high-contrast-dark .modal-content,
+html.high-contrast-dark .form-input,
+html.high-contrast-dark .form-textarea,
+html.high-contrast-dark .form-select,
+html.high-contrast-dark select,
+html.high-contrast-dark input,
+html.high-contrast-dark textarea {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+}
+html.dark-mode input::placeholder,
+html.dark-mode textarea::placeholder {
+  color: #c4b8e8 !important;
+}
+html.high-contrast-dark input::placeholder,
+html.high-contrast-dark textarea::placeholder {
+  color: #e5e5e5 !important;
+}
+
+/* Evitar que elementos de tarjetas o badges hereden texto de bajo contraste. */
+html.high-contrast-dark .stat-title,
+html.high-contrast-dark .stat-value,
+html.high-contrast-dark .stat-meta,
+html.high-contrast-dark .metric-label,
+html.high-contrast-dark .metric-value,
+html.high-contrast-dark .room-name,
+html.high-contrast-dark .room-museum,
+html.high-contrast-dark .artist-name,
+html.high-contrast-dark .artist-bio,
+html.high-contrast-dark .tour-title,
+html.high-contrast-dark .tour-guide,
+html.high-contrast-dark .itinerary-heading,
+html.high-contrast-dark .timeline-step,
+html.high-contrast-dark .step-time {
+  color: #ffffff !important;
+}
+
+/* En modo claro de alto contraste, reforzar también los textos y fondos. */
+html.high-contrast-light .header {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-bottom: 2px solid #000000 !important;
+}
+html.high-contrast-light .breadcrumb-trail span,
+html.high-contrast-light .breadcrumb-active,
+html.high-contrast-light .activity-title,
+html.high-contrast-light .activity-desc,
+html.high-contrast-light .activity-time,
+html.high-contrast-light .quick-action-tile span {
+  color: #000000 !important;
+}
+html.high-contrast-light .activity-item,
+html.high-contrast-light .activity-item:hover,
+html.high-contrast-light .quick-action-tile,
+html.high-contrast-light .quick-action-tile:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
+}
+
+/* Enfoque visible consistente para navegación con teclado. */
+html.dark-mode :focus-visible,
+html.high-contrast-dark :focus-visible {
+  outline: 3px solid #facc15 !important;
+  outline-offset: 3px !important;
+}
+html.high-contrast-light :focus-visible {
+  outline: 3px solid #000000 !important;
+  outline-offset: 3px !important;
+}

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de Administración de Museos - Gestión moderna de patrimonio cultural, obras de arte, salas y visitas guiadas con estética futurista de acentos neón y alta accesibilidad WCAG.">
+  <title>Patrimonia · Sistema de Administración de Museos</title>
+
+  <!-- Tipografía moderna de alta legibilidad (Google Fonts: Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Hoja de estilos principal -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/accessibility.css">
+</head>
+<body data-active-section="dashboard">
+  <!-- Filtros SVG para Simulación de Daltonismo (ocultos, referenciados por CSS) -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="protanopia-filter">
+        <feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/>
+      </filter>
+      <filter id="deuteranopia-filter">
+        <feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/>
+      </filter>
+      <filter id="tritanopia-filter">
+        <feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0"/>
+      </filter>
+    </defs>
+  </svg>
+  <div class="app-container">
+    <!-- ====================================================================
+         BARRA LATERAL DE NAVEGACIÓN (SIDEBAR FIJA / RESPONSIVA)
+         ==================================================================== -->
+    <aside id="sidebar" class="sidebar" aria-label="Navegación del Sistema">
+      <!-- Marca e Identidad -->
+      <div class="sidebar-brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 3l9 7H3l9-7z"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>PATRIMONIA</h1>
+          <span>Gestión de Museos</span>
+        </div>
+      </div>
+
+      <!-- Menú de Navegación Semántico -->
+      <nav class="sidebar-nav" aria-label="Menú principal de módulos">
+        <div class="nav-section-title">Módulos de Gestión</div>
+
+        <button type="button" class="nav-btn active" data-section="dashboard" aria-current="page" onclick="App.navigateTo('dashboard')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <span>Vista General</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-section="museums" onclick="App.navigateTo('museums')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 3l9 7H3l9-7z"/></svg>
+          <span>Sedes Museísticas</span>
+          <span id="badgeMuseumsCount" class="nav-badge" aria-label="Sedes activas">4</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-section="artworks" onclick="App.navigateTo('artworks')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+          <span>Obras & Artefactos</span>
+          <span id="badgeArtworksCount" class="nav-badge" aria-label="Obras catalogadas">4</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-section="rooms" onclick="App.navigateTo('rooms')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>Salas y Artistas</span>
+          <span id="badgeRoomsCount" class="nav-badge" aria-label="Salas activas">5</span>
+        </button>
+
+        <button type="button" class="nav-btn" data-section="tours" onclick="App.navigateTo('tours')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Visitas Guiadas</span>
+          <span id="badgeToursCount" class="nav-badge" aria-label="Tours activos">3</span>
+        </button>
+      </nav>
+
+      <!-- Pie de Barra Lateral con Estado del Backend Node.js -->
+      <div class="sidebar-footer">
+        <div class="system-status-pill" role="status" aria-live="polite">
+          <div id="apiStatusDot" class="status-dot"></div>
+          <div class="status-info">
+            <span class="status-label">Servicio Backend</span>
+            <span id="apiStatusText" class="status-val">Node.js Conectado</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         CONTENEDOR PRINCIPAL Y ENCABEZADO
+         ==================================================================== -->
+    <div class="main-wrapper">
+      <!-- Encabezado Superior Fijo -->
+      <header class="header" role="banner">
+        <div class="header-left">
+          <!-- Botón de apertura para menú en dispositivos móviles -->
+          <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="sidebar">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+
+          <!-- Migas de pan de navegación -->
+          <nav aria-label="Ruta de navegación" class="breadcrumb-trail">
+            <span>Museos</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <span id="breadcrumbActive" class="breadcrumb-active">Dashboard / Vista General</span>
+          </nav>
+        </div>
+
+        <div class="header-right">
+          <!-- Búsqueda Rápida Global -->
+          <div class="header-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="globalSearchInput" type="search" placeholder="Buscar obras, sedes, artistas, salas, tours... (/)" aria-label="Buscar en todo el catálogo patrimonial" autocomplete="off">
+          </div>
+
+          <!-- Botón de Herramientas de Accesibilidad Universal (Zoom, Contraste, etc.) -->
+          <button class="header-action-btn" id="headerAccessibilityBtn" type="button" aria-label="Abrir panel de herramientas de accesibilidad (Alt + A)" title="Accesibilidad Universal (Alt + A)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="4" r="2"/>
+              <path d="m18 19 1-7-6 1"/>
+              <path d="m5 8 3-3 5.5 3-2.36 3.5"/>
+              <path d="M4.24 14.5a5 5 0 0 0 6.88 6"/>
+              <path d="M13.76 17.5a5 5 0 0 0-1.76-7.5"/>
+            </svg>
+          </button>
+
+          <!-- Botón de Atajos de Teclado (Accesibilidad WCAG) -->
+          <button class="header-action-btn" type="button" aria-label="Ver atajos de teclado accesibles" onclick="App.openShortcutsModal()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/><line x1="8" y1="16" x2="16" y2="16"/></svg>
+          </button>
+
+          <!-- Botón de Notificaciones del Sistema -->
+          <button class="header-action-btn" type="button" aria-label="Notificaciones del sistema" onclick="App.showToast('No hay incidentes críticos de conservación registrados hoy.')">
+            <div class="action-badge"></div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- ==================================================================
+           CONTENIDO PRINCIPAL INTERACTIVO (MAIN)
+           ================================================================== -->
+      <main id="mainContent" class="main-content" role="main">
+
+        <!-- ----------------------------------------------------------------
+             MÓDULO 1: DASHBOARD / VISTA GENERAL
+             ---------------------------------------------------------------- -->
+        <section id="dashboard" class="content-section active-section" aria-labelledby="dashHeading">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <h2 id="dashHeading">Vista General y Métricas Patrimoniales</h2>
+              <p>Supervisión consolidada de sedes culturales, estado de conservación de piezas y aforos.</p>
+            </div>
+            <div class="section-actions">
+              <button type="button" class="btn btn-secondary" onclick="App.exportDataReport()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                Exportar Reporte
+              </button>
+              <button type="button" class="btn btn-primary" onclick="App.openAddArtworkModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nueva Obra
+              </button>
+            </div>
+          </div>
+
+          <!-- Tarjetas de Estadísticas Principales -->
+          <div id="statsContainer" class="dashboard-grid">
+            <!-- Inyectado dinámicamente por app.js -->
+          </div>
+
+          <!-- Cuadrícula Inferior: Actividad Reciente & Acciones Rápidas -->
+          <div class="dashboard-lower-grid">
+            <!-- Panel de Actividad y Alertas de Conservación -->
+            <article class="card-base panel-card" aria-labelledby="activityHeading">
+              <div class="panel-header">
+                <h3 id="activityHeading">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--neon-violet-dark)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  Bitácora de Monitoreo & Conservación Preventiva
+                </h3>
+                <span class="panel-badge">En tiempo real</span>
+              </div>
+
+              <div class="activity-list" id="activityList">
+                <div class="activity-item">
+                  <div class="activity-avatar" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <div class="activity-details">
+                    <div class="activity-title">Revisión de Estabilidad Climática OK</div>
+                    <div class="activity-desc">Sala Dorada Renacentista mantiene humedad relativa en 50% y temperatura constante de 20.5°C.</div>
+                  </div>
+                  <div class="activity-time">Hace 15 min</div>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-avatar" style="color: #f59e0b;" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </div>
+                  <div class="activity-details">
+                    <div class="activity-title">Inspección de Barniz Programada</div>
+                    <div class="activity-desc">Lienzo "Alegoría de la Luz Aurora" asignado al equipo de restauración para limpieza superficial.</div>
+                  </div>
+                  <div class="activity-time">Hace 2 horas</div>
+                </div>
+
+                <div class="activity-item">
+                  <div class="activity-avatar" style="color: var(--neon-violet-dark);" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  </div>
+                  <div class="activity-details">
+                    <div class="activity-title">Aforo al 88% en Visita Nocturna</div>
+                    <div class="activity-desc">El tour "Oro, Mitos y Alquimia Precolombina" cuenta con 22 asistentes registrados sobre 25 plazas.</div>
+                  </div>
+                  <div class="activity-time">Hace 3 horas</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Accesos Directos a Módulos -->
+            <article class="card-base panel-card" aria-labelledby="quickActionsHeading">
+              <div class="panel-header">
+                <h3 id="quickActionsHeading">Accesos Directos</h3>
+              </div>
+              <div class="quick-actions-grid">
+                <button type="button" id="quickActionNewArtwork" class="quick-action-tile" onclick="App.openAddArtworkModal()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  <span>Nueva Obra</span>
+                </button>
+                <button type="button" id="quickActionNewMuseum" class="quick-action-tile" onclick="App.openAddMuseumModal()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 3l9 7H3l9-7z"/></svg>
+                  <span>Nueva Sede</span>
+                </button>
+                <button type="button" id="quickActionTours" class="quick-action-tile" onclick="App.navigateTo('tours')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span>Ver Tours</span>
+                </button>
+                <button type="button" id="quickActionRooms" class="quick-action-tile" onclick="App.navigateTo('rooms'); App.switchSubtab('rooms');">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                  <span>Salas y Aforos</span>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Distribución Técnica y Visual del Acervo Patrimonial -->
+          <article class="chart-card-container" aria-labelledby="chartHeading">
+            <div class="chart-header">
+              <div>
+                <h3 id="chartHeading" style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">Distribución Patrimonial por Tipología y Soporte</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Proporción de acervo catalogado bajo protocolos de conservación preventiva.</p>
+              </div>
+              <span class="panel-badge">Actualizado Hoy</span>
+            </div>
+
+            <div class="chart-bars-list" id="categoryDistributionBars">
+              <!-- Renderizado dinámicamente con barras luminosas de neón -->
+            </div>
+          </article>
+        </section>
+
+        <!-- ----------------------------------------------------------------
+             MÓDULO 2: GESTIÓN DE MUSEOS
+             ---------------------------------------------------------------- -->
+        <section id="museums" class="content-section" aria-labelledby="museumsHeading">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <h2 id="museumsHeading">Sedes Museísticas y Red Patrimonial</h2>
+              <p>Fichas institucionales con ubicación geográfica, portales web oficiales y volumen de acervo.</p>
+            </div>
+            <div class="section-actions">
+              <button type="button" class="btn btn-primary" onclick="App.openAddMuseumModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Añadir Nueva Sede
+              </button>
+            </div>
+          </div>
+
+          <!-- Cuadrícula de Museos -->
+          <div id="museumsGrid" class="museums-grid">
+            <!-- Inyectado dinámicamente por app.js -->
+          </div>
+        </section>
+
+        <!-- ----------------------------------------------------------------
+             MÓDULO 3: GESTIÓN DE OBRAS / ARTEFACTOS
+             ---------------------------------------------------------------- -->
+        <section id="artworks" class="content-section" aria-labelledby="artworksHeading">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <h2 id="artworksHeading">Catálogo de Obras & Artefactos</h2>
+              <p>Inventario interactivo de piezas de arte, estado de conservación porcentual y sala asignada.</p>
+            </div>
+            <div class="section-actions">
+              <button type="button" class="btn btn-primary" onclick="App.openAddArtworkModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Registrar Nueva Pieza
+              </button>
+            </div>
+          </div>
+
+          <!-- Barra de Filtros y Búsqueda de Obras -->
+          <div class="filter-toolbar" role="search" aria-label="Filtros del catálogo de obras">
+            <div class="filter-group">
+              <label for="artworkCategoryFilter" style="font-size: 0.84rem; font-weight: 700; color: var(--text-secondary);">Categoría:</label>
+              <select id="artworkCategoryFilter" class="filter-select">
+                <option value="all">Todas las Categorías</option>
+                <option value="Pintura">Pintura al Óleo</option>
+                <option value="Escultura">Escultura en Mármol</option>
+                <option value="Orfebrería">Orfebrería Prehispánica</option>
+                <option value="Manuscrito">Manuscrito y Pergamino</option>
+                <option value="Instalación">Instalación Lumínica</option>
+              </select>
+
+              <label for="artworkConservationFilter" style="font-size: 0.84rem; font-weight: 700; color: var(--text-secondary); margin-left: 8px;">Estado:</label>
+              <select id="artworkConservationFilter" class="filter-select">
+                <option value="all">Todos los Estados</option>
+                <option value="excellent">Excelente (>90%)</option>
+                <option value="regular">Observación (75% - 89%)</option>
+                <option value="critical">Atención Urgente (<75%)</option>
+              </select>
+            </div>
+
+            <div class="filter-group" style="flex: 1; max-width: 320px;">
+              <input type="search" id="artworkSearchInput" class="form-input" placeholder="Buscar por título, artista o sala..." aria-label="Filtrar por texto">
+            </div>
+          </div>
+
+          <!-- Cuadrícula de Obras -->
+          <div id="artworksGrid" class="artworks-grid">
+            <!-- Inyectado dinámicamente por app.js -->
+          </div>
+        </section>
+
+        <!-- ----------------------------------------------------------------
+             MÓDULO 4: SALAS DE EXPOSICIÓN Y ARTISTAS
+             ---------------------------------------------------------------- -->
+        <section id="rooms" class="content-section" aria-labelledby="roomsHeading">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <h2 id="roomsHeading">Salas de Exposición & Artistas Registrados</h2>
+              <p>Control de capacidades de sala, variables ambientales y perfiles biográficos de creadores.</p>
+            </div>
+            <div class="section-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button type="button" class="btn btn-primary" onclick="App.openAddRoomModal()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nueva Sala
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="App.openAddArtistModal()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nuevo Artista
+              </button>
+            </div>
+          </div>
+
+          <!-- Sub-pestañas de navegación -->
+          <div class="subtabs-container" role="tablist" aria-label="Sub-módulos de salas y artistas">
+            <button type="button" class="subtab-btn active" data-subtab="rooms" role="tab" aria-selected="true" aria-controls="subtab-rooms" onclick="App.switchSubtab('rooms')">
+              Salas de Exposición
+            </button>
+            <button type="button" class="subtab-btn" data-subtab="artists" role="tab" aria-selected="false" aria-controls="subtab-artists" onclick="App.switchSubtab('artists')">
+              Artistas Registrados
+            </button>
+          </div>
+
+          <!-- Panel 1: Salas de Exposición -->
+          <div id="subtab-rooms" class="subtab-panel" role="tabpanel">
+            <div id="roomsGrid" class="rooms-grid">
+              <!-- Inyectado dinámicamente por app.js -->
+            </div>
+          </div>
+
+          <!-- Panel 2: Artistas -->
+          <div id="subtab-artists" class="subtab-panel" role="tabpanel" style="display: none;">
+            <div id="artistsGrid" class="artists-grid">
+              <!-- Inyectado dinámicamente por app.js -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ----------------------------------------------------------------
+             MÓDULO 5: VISITAS GUIADAS (TOURS)
+             ---------------------------------------------------------------- -->
+        <section id="tours" class="content-section" aria-labelledby="toursHeading">
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <h2 id="toursHeading">Programación de Visitas Guiadas (Tours)</h2>
+              <p>Recorridos temáticos estructurados con secuencia cronológica y control de aforo.</p>
+            </div>
+            <div class="section-actions">
+              <button type="button" class="btn btn-primary" onclick="App.openAddTourModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                Programar Nuevo Tour
+              </button>
+            </div>
+          </div>
+
+          <!-- Cuadrícula de Tours -->
+          <div id="toursGrid" class="tours-grid">
+            <!-- Inyectado dinámicamente por app.js -->
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL ACCESIBLE GENÉRICO (WCAG WAI-ARIA MODAL DIALOG)
+       ==================================================================== -->
+  <div id="modalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title">Título del Modal</h3>
+        <button id="modalCloseBtn" class="modal-close-btn" type="button" aria-label="Cerrar ventana emergente">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="modalBody" class="modal-body">
+        <!-- Contenido dinámico del formulario o ficha técnica -->
+      </div>
+      <div id="modalFooter" class="modal-footer">
+        <!-- Botones de acción dinámicos -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Región para mensajes accesibles y Toasts en pantalla (WCAG 4.1.3 Status Messages) -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Scripts de la Aplicación (Arquitectura MVC + POO Unificada) -->
+  <!-- 1. Servicios y Comunicación REST -->
+  <script src="js/services/ApiService.js"></script>
+
+  <!-- 2. Modelos de Datos (Carpeta única /models) -->
+  <script src="models/BaseEntity.js"></script>
+  <script src="models/Museum.js"></script>
+  <script src="models/Artwork.js"></script>
+  <script src="models/Room.js"></script>
+  <script src="models/Artist.js"></script>
+  <script src="models/Tour.js"></script>
+  <script src="models/Category.js"></script>
+  <script src="models/AccessibilityModel.js"></script>
+  <script src="models/PatrimoniaModel.js"></script>
+
+  <!-- 3. Vistas Especializadas (Carpeta única /views) -->
+  <script src="views/ModalView.js"></script>
+  <script src="views/ToastView.js"></script>
+  <script src="views/AccessibilityView.js"></script>
+  <script src="views/GlobalSearchView.js"></script>
+  <script src="views/DashboardView.js"></script>
+  <script src="views/MuseumView.js"></script>
+  <script src="views/ArtworkView.js"></script>
+  <script src="views/RoomArtistView.js"></script>
+  <script src="views/TourView.js"></script>
+
+  <!-- 4. Controladores (Carpeta única /controllers) -->
+  <script src="controllers/AccessibilityController.js"></script>
+  <script src="controllers/AppController.js"></script>
+
+  <!-- 5. Scripts de Entrada y Bootstrap -->
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+
